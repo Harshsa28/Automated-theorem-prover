@@ -11,36 +11,41 @@ class variable:
         self.name = name
         self.left = None
         self.right = None
+        self.id = "variable"
 
 class negation:
     def __init__(self, left):
         self.left = left
         self.right = None
+        self.id = "negation"
 
 class conjunction:
     def __init__(self, left, right):
         self.left = left
         self.right = right
+        self.id = "conjunction"
 
 class disjunction:
     def __init__(self, left, right):
         self.left = left
         self.right = right
+        self.id = "disjunction"
 
 class implies:
     def __init__(self, left, right):
         self.left = left
         self.right = right
+        self.id = "implies"
 
 def get_var(string, index):
-	#global ATOMS
+    #global ATOMS
     while (string[index] == ' '):
         index += 1
     var = ""
     while ((index < len(string)) and string[index].isalnum()):
         var += string[index]
         index += 1
-	#ATOMS.add(var)
+    #ATOMS.add(var)
     return [string, index, var]
 
 
@@ -153,15 +158,20 @@ def print_tree(tree):
         return "("+print_tree(tree.left)+" -> "+print_tree(tree.right)+")"
 
 
-def fire():
-    string = str(input("give formula : "))
+def fire(string):
+    #string = str(input("give formula : "))
     index = 0
     [string, index, p] = parse (string, index)
-	#print_AST(p)
+    #print_AST(p)
     print('*'*20)
     print(print_tree(p))
     print('*'*20)
     #return [p, ATOMS]
     return p
 
-fire()
+def to_parse(formula):
+    [string, index, p] = parse(formula, 0)
+    return p
+
+#print_tree(to_parse("(p -> q)"))
+#print_tree(fire("(p -> q)"))
