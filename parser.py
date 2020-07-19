@@ -38,13 +38,19 @@ def get_var(string, index):
 	while ((index < len(string)) and string[index].isalnum()):
 		var += string[index]
 		index += 1
+	#if var == "":
+	#	index += 1
+	#	while ((index < len(string)) and string[index].isalnum()):
+	#		var += string[index]
+	#		index += 1
 	return [string, index, var]
 
 def get_sym(string, index):
 	while (string[index] == ' '):
 		index += 1
 	symbol = ""
-	while (string[index] != ' ' and string[index] != ')' and string[index] != '('): 
+	#while (string[index] != ' ' and string[index] != ')' and string[index] != '(' and not string[index].isalnum): 
+	while (string[index] not in ['', '(', ')'] and not string[index].isalnum()):
 		symbol += string[index]
 		index += 1
 	return [string, index, symbol]
@@ -53,9 +59,12 @@ def check_not (string, index):
 	symbol = ""
 	[string, index, symbol] = get_sym (string, index)
 	if symbol == "~":
+		print("check returning 1 and symbol is :", symbol)
 		return 1
 	else:
+		print("check ret 0 and symbol is :", symbol)
 		return 0
+
 
 def check_var (string, index):
 	while (string[index] == ' '):
@@ -75,6 +84,7 @@ def check_var (string, index):
 
 
 def parse(string, index): 
+	print("string is :", string[index:])
 	while (string[index] == ' '):
 		index += 1
 	if string[index] == ')':
@@ -88,21 +98,21 @@ def parse(string, index):
 	if string[index] == '(':
 		index += 1
 	if check_not (string , index) == 0:
-		if check_var(string, index) == 1:
-			var = ""
-			[string, index, var] = get_var(string, index)
-			p = variable(var)
-			return [string, index, p]
+		#if check_var(string, index) == 1:
+		#	var = ""
+		#	[string, index, var] = get_var(string, index)
+		#	p = variable(var)
+		#	return [string, index, p]
 		[string, index, left] = parse (string, index)
 		[string, index, symbol] = get_sym(string, index)
 		[string, index, right] = parse(string, index)
 	else:
 		left = None
 		[string, index, symbol] = get_sym(string, index)
-		print(symbol)
+		#print(symbol)
 		assert symbol == "~"
 		[string, index, right] = parse(string, index)
-		print(right)
+		#print(right)
 	if left == None and symbol == '~':
 		p = negation(right)
 	elif symbol == "/\\":

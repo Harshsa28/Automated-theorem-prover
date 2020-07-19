@@ -44,7 +44,10 @@ def get_clauses():
 	formulas = string.split(',')
 	conclusion = formulas[-1].split('|-')[-1]
 	formulas[-1] = formulas[-1].split('|-')[0]
-	formulas.append('(~(' + conclusion + '))')
+	if conclusion.alnum():#conc is a variable
+		formulas.appen('(~ ' + conclusion + ')') #the space after '~' is very imp
+	else:
+		formulas.append('(~(' + conclusion + '))')
 	print(formulas)
 	clauses = []
 	for i in formulas:
