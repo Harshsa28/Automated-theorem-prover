@@ -1,40 +1,42 @@
-class variable:
-	def __init__(self, name):
-		self.name = name
-		self.left = None
-		self.right = None
-		self.id = "variable"
+from parser import variable, negation, conjunction, disjunction, implies
 
-class negation:
-	def __init__(self, left):
-		self.left = left
-		self.right = None
-		self.id = "negation"
-
-class conjunction:
-	def __init__(self, left, right):
-		self.left = left
-		self.right = right
-		self.id = "conjunction"
-
-class disjunction:
-	def __init__(self, left, right):
-		self.left = left
-		self.right = right
-		self.id = "disjunction"
-
-class implies:
-	def __init__(self, left, right):
-		self.left = left
-		self.right = right
-		self.id = "implies"
+###class variable:
+#	def __init__(self, name):
+#		self.name = name
+#		self.left = None
+#		self.right = None
+#		self.id = "variable"
+#
+#class negation:
+#	def __init__(self, left):
+#		self.left = left
+#		self.right = None
+#		self.id = "negation"
+#
+#class conjunction:
+#	def __init__(self, left, right):
+#		self.left = left
+#		self.right = right
+#		self.id = "conjunction"
+#
+#class disjunction:
+#	def __init__(self, left, right):
+#		self.left = left
+#		self.right = right
+#		self.id = "disjunction"
+#
+#class implies:
+#	def __init__(self, left, right):
+#		self.left = left
+#		self.right = right
+#		self.id = "implies"
 
 def to_NNF (tree):
 	if isinstance(tree, implies):
 		return disjunction(negation(to_NNF(tree.left)), to_NNF(tree.right))
 	else:
 		return tree
-'''
+
 def to_CNF(tree):
 	if isinstance(tree, negation):
 		if isinstance(tree.left, negation):
@@ -103,7 +105,7 @@ def to_CNF(tree):
 		else:
 			return tree
 
-
+'''
 
 
 
@@ -111,20 +113,20 @@ def to_CNF(tree):
 
 
 def print_tree(tree):
-	#if isinstance(tree, variable):
-	if tree.id == "variable":
+	if isinstance(tree, variable):
+		#if tree.id == "variable":
 		return str(tree.name)
-	#if isinstance(tree, negation):
-	if tree.id == "negation":
+	if isinstance(tree, negation):
+		#if tree.id == "negation":
 		return "(~"+print_tree(tree.left)+")"
-	#if isinstance(tree, conjunction):
-	if tree.id == "conjunction":
+	if isinstance(tree, conjunction):
+		#if tree.id == "conjunction":
 		return "("+print_tree(tree.left)+" /\ "+print_tree(tree.right)+")"
-	#if isinstance(tree, disjunction):
-	if tree.id == "disjunction":
+	if isinstance(tree, disjunction):
+		#if tree.id == "disjunction":
 		return "("+print_tree(tree.left)+" \/ "+print_tree(tree.right)+")"
-	#if isinstance(tree, implies):
-	if tree.id == "implies":
+	if isinstance(tree, implies):
+		#if tree.id == "implies":
 		return "("+print_tree(tree.left)+" -> "+print_tree(tree.right)+")"
 
 
